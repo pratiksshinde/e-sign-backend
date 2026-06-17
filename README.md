@@ -251,6 +251,9 @@ npm test
 
 ---
 
-## Learn NestJS
+## 🎓 Interview Preparation & Learning NestJS
 
-See **[NESTJS_TUTORIAL.md](./NESTJS_TUTORIAL.md)** for a beginner-friendly explanation of every file and concept in this project.
+If you are a beginner to NestJS or preparing for an interview based on this project, please read:
+**[NESTJS_TUTORIAL.md](./NESTJS_TUTORIAL.md)** 
+
+This guide explains the entire project flow, NestJS concepts (Modules, Controllers, Services), the DocuSeal sequential signing logic, and provides **frequently asked interview questions with answers**.
