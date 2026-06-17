@@ -6,11 +6,9 @@ import { json, urlencoded } from 'express';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  // Disable NestJS's built-in body parser — we register Express 5's parsers manually
   const app = await NestFactory.create(AppModule, { bodyParser: false });
   const logger = new Logger('Bootstrap');
 
-  // Explicitly register body parsers for Express 5 compatibility
   app.use(json({ limit: '10mb' }));
   app.use(urlencoded({ extended: true, limit: '10mb' }));
 

@@ -111,11 +111,7 @@ export class WebhooksService {
       return;
     }
 
-    // DocuSeal form.completed payload:
-    //   data.id = submitter ID
-    //   data.submission.id = submission ID
-    //   data.role = role name (e.g. "Role 2", "Role 3")
-    //   data.email = signer email
+
     const rawSubmissionId =
       payload.data.submission_id ?? payload.data.submission?.id;
 
