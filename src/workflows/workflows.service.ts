@@ -54,6 +54,18 @@ export class WorkflowsService {
       throw new NotFoundException('Document not found');
     }
 
+    // Ensure the workflow creator (role_1) is the same person who uploaded the document
+    if (
+      document.uploadedByEmail.toLowerCase() !==
+      createWorkflowDto.role1Email.toLowerCase()
+    ) {
+      throw new BadRequestException(
+        'Only the document uploader can create a workflow. ' +
+          `Document was uploaded by "${document.uploadedByEmail}" but workflow ` +
+          `role1Email is "${createWorkflowDto.role1Email}".`,
+      );
+    }
+
     const existingWorkflow = await this.workflowModel.findOne({
       where: { documentId: document.id },
     });
@@ -287,9 +299,17 @@ export class WorkflowsService {
 
   async handleRole2Signed(workflow: Workflow) {
     await workflow.update({
-      status: DocumentStatus.PENDING_ROLE_2_SIGNATURE,
+      status: DocumentStatus.PENDING_ROLE_3_SIGNATURE,
       currentStep: WorkflowStep.AWAITING_ROLE_3_EMAIL,
     });
+
+    const document = await this.documentModel.findByPk(workflow.documentId);
+    if (document) {
+      await document.update({
+        status: DocumentStatus.PENDING_ROLE_3_SIGNATURE,
+        currentSigner: null,
+      });
+    }
 
     await this.auditLogModel.create({
       documentId: workflow.documentId,
