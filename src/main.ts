@@ -30,9 +30,9 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const port = configService.get<number>('PORT') || 3000;
 
-  await app.listen(port);
-  logger.log(`Server running on http://localhost:${port}`);
+  await app.listen(port, '0.0.0.0');
+  logger.log(`Server running on http://0.0.0.0:${port}`);
   logger.log(`Swagger docs: http://localhost:${port}/api/docs`);
- 
+  logger.log(`Webhook endpoint: POST /webhooks/docuseal`);
 }
 bootstrap();
