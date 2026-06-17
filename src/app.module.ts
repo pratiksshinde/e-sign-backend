@@ -25,7 +25,7 @@ import { WebhooksModule } from './webhooks/webhooks.module';
           uri: dbUrl,
           autoLoadModels: true,
           synchronize: true,
-          sync: { alter: true },
+          sync: { },
           ...(useSsl && {
             dialectOptions: {
               ssl: {
