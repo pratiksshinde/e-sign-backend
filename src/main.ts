@@ -2,11 +2,17 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { json, urlencoded } from 'express';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  // Disable NestJS's built-in body parser — we register Express 5's parsers manually
+  const app = await NestFactory.create(AppModule, { bodyParser: false });
   const logger = new Logger('Bootstrap');
+
+  // Explicitly register body parsers for Express 5 compatibility
+  app.use(json({ limit: '10mb' }));
+  app.use(urlencoded({ extended: true, limit: '10mb' }));
 
   app.enableCors();
 
